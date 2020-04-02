@@ -128,6 +128,7 @@ public class Ch3Ex2Activity extends AppCompatActivity {
 
         // 在这里实现了一个 ObjectAnimator，对 target 控件的背景色进行修改
         // 可以思考下，这里为什么要使用 ofArgb，而不是 ofInt 呢？
+        //ofArgb是在color value之间变换，而ofInt是在int value之间变换
         ObjectAnimator animator1 = ObjectAnimator.ofArgb(target,
                 "backgroundColor",
                 getBackgroundColor(startColorPicker),
@@ -137,12 +138,24 @@ public class Ch3Ex2Activity extends AppCompatActivity {
         animator1.setRepeatMode(ObjectAnimator.REVERSE);
 
         // TODO ex2-1：在这里实现另一个 ObjectAnimator，对 target 控件的大小进行缩放，从 1 到 2 循环
+        ObjectAnimator animatorX=ObjectAnimator.ofFloat(target,"scaleX",1,2);
+        ObjectAnimator animatorY=ObjectAnimator.ofFloat(target,"scaleY",1,2);
+        animatorX.setDuration(Integer.parseInt(durationSelector.getText().toString()));
+        animatorX.setRepeatCount(ObjectAnimator.INFINITE);
+        animatorX.setRepeatMode(ObjectAnimator.REVERSE);
+        animatorY.setDuration(Integer.parseInt(durationSelector.getText().toString()));
+        animatorY.setRepeatCount(ObjectAnimator.INFINITE);
+        animatorY.setRepeatMode(ObjectAnimator.REVERSE);
 
         // TODO ex2-2：在这里实现另一个 ObjectAnimator，对 target 控件的透明度进行修改，从 1 到 0.5f 循环
+        ObjectAnimator animator2=ObjectAnimator.ofFloat(target,"alpha",1,0.5f);
+        animator2.setDuration(Integer.parseInt(durationSelector.getText().toString()));
+        animator2.setRepeatCount(ObjectAnimator.INFINITE);
+        animator2.setRepeatMode(ObjectAnimator.REVERSE);
 
         // TODO ex2-3: 将上面创建的其他 ObjectAnimator 都添加到 AnimatorSet 中
         animatorSet = new AnimatorSet();
-        animatorSet.playTogether(animator1);
+        animatorSet.playTogether(animator1,animator2,animatorX,animatorY);
         animatorSet.start();
     }
 }
